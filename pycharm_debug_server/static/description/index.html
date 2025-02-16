@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>PyCharm Debug Server</title>
+    </head>
+    <body>
+        <header>
+            <h1>PyCharm Debug Server for Odoo</h1>
+            <p>This Odoo module enables debugging using the <strong>Python Debug Server</strong> option in PyCharm Professional.</p>
+        </header>
+        <div>
+            <h2>Installation</h2>
+            <p>
+                Be sure to have the <i>"pydevd-pycharm"</i> package installed in your Odoo environment.
+                It is recommended to use the version recommended by PyCharm itself when configuring the debug server.
+            </p>
+        </div>
+        <div>
+            <h2>Configuration in Odoo</h2>
+            <ul>
+                <li>
+                    Using environment variables:
+                    <ul>
+                        <li><strong>PYCHARM_DEBUG_SERVER_ENABLED</strong>: Set to <strong>True</strong> to enable the debug server. (<i>Default: False</i>)</li>
+                        <li><strong>PYCHARM_DEBUG_SERVER_HOST</strong>: Set the host to use for the debug server. (<i>Default: localhost</i>)</li>
+                        <li><strong>PYCHARM_DEBUG_SERVER_PORT</strong>: Set the port to use for the debug server. (<i>Default: 6899</i>)</li>
+                        <li><strong>PYCHARM_DEBUG_SERVER_STDOUT</strong>: Set to <strong>False</strong> to avoid redirect the standard output to the debug server. (<i>Default: True</i>)</li>
+                        <li><strong>PYCHARM_DEBUG_SERVER_STDERR</strong>: Set to <strong>False</strong> to avoid redirect the standard error to the debug server. (<i>Default: True</i>)</li>
+                    </ul>
+                </li>
+                <li>
+                    Using the Odoo configuration file:
+                    <pre class="odoo-config" style="white-space: pre-line;">
+                        [options]
+                        (...)
+                        workers = 2
+                        server_wide_modules = web
+
+                        (...)
+                        [pycharm_debug_server]
+                        enabled = True
+                        host = host.docker.internal
+                        port = 6899
+                        stdout = True
+                        stderr = True
+                    </pre>
+                </li>
+                <li>
+                    Environment variables have priority over the configuration file.
+                </li>
+                <li>
+                    Confirm the debug is running correctly by checking the logs.
+                    <pre class="odoo-config" style="white-space: pre-line;">
+                        ...INFO odoo odoo.addons.pycharm_debug_server.hooks: Initializing PyCharm Debug Server
+                    </pre>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h2>Configuration in PyCharm</h2>
+            <ul>
+                <li>
+                    Go to <strong>Run</strong> > <strong>Edit Configurations</strong>.
+                    <img src="first_step.png" style="display: block; margin: 1rem; width: 600px;" alt="First step">
+                </li>
+                <li>
+                    Add a new <strong>Python Debug Server</strong> configuration and set the name, check the <strong>Allow multiple instances</strong> option,
+                    and set the host and port.
+                    <img src="second_step.png" style="display: block; margin: 1rem; width: 600px;" alt="Second step">
+                </li>
+                <li>
+                    Add path mapping in the <strong>Path Mappings</strong>. Example  in docker including the custom addons path and the Odoo source code.
+                    <img src="third_step.png" style="display: block; margin: 1rem; width: 600px;" alt="Third step">
+                </li>
+                <li>
+                    Save the changes, check the module is installed in Odoo and configured correctly, start the debug server in PyCharm,
+                    and restart the Odoo server. If everything is correct, you should break in the hook and then you can skip to the next breakpoint.
+                    <img src="fourth_step.png" style="display: block; margin: 1rem; width: 1000px;" alt="Fourth step">
+                    <img src="fifth_step.png" style="display: block; margin: 1rem; width: 1000px;" alt="Fifth step">
+                </li>
+                <li>
+                    Enjoy debugging!! 🐞
+                    <img src="chill.png" style="display: block; margin: 1rem;" alt="Debugging">
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h2>Common issues</h2>
+            <ul>
+                <li>
+                    <strong>Initializing log not appearing</strong>: Check the enabled option is set to True.
+                </li>
+                <li>
+                    <strong>Connection refused</strong>: Check that the configuration is correct, the pydevd_pycharm package is installed, and the debug server is running.
+                </li>
+                <li>
+                    <strong>Mappings not working</strong>: Check the path mappings in PyCharm are correct and enter the absolute path.
+                </li>
+                <li>
+                    <strong>Server memory limit (...) reached</strong>: Increase the memory limit in the Odoo configuration file.
+                </li>
+            </ul>
+        </div>
+        <footer>
+            <p>Made with ❤️ by <a href="https://angelvil.dev" target="_blank">Angel Vilaplana</a></p>
+            <div style="display: flex; margin-top: 1rem; gap: .5rem;">
+                <a href="https://www.github.com/angelvilaplana" style="width: 2rem; padding: .2rem; background-color: #333;" target="_blank">
+                    <img src="https://angelvil.dev/assets/github.svg" alt="GitHub">
+                </a>
+                <a href="mailto:vilaplanaangel@gmail.com" target="_blank" style="width: 2rem; padding: .2rem; background-color: #dd4b39;">
+                    <img src="https://angelvil.dev/assets/mail.svg" alt="Mail">
+                </a>
+                <a href="https://www.linkedin.com/in/angel-vilaplana-129986238" target="_blank" style="width: 2rem; padding: .2rem; background-color: #0077b5;">
+                    <img src="https://angelvil.dev/assets/linkedin.svg" alt="LinkedIn">
+                </a>
+            </div>
+        </footer>
+    </body>
+</html>
