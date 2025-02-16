@@ -1,7 +1,7 @@
 {
     "name": "PyCharm Debug Server",
     "summary": "Debug with PyCharm using the 'Python Debug Server' configuration",
-    "version": "15.0.0.0.1",
+    "version": "16.0.0.0.1",
     "category": "Extra Tools",
     "images": [ "static/description/banner.png" ],
     "website": "https://angelvil.dev",
