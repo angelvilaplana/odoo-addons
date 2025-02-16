@@ -3,6 +3,7 @@
     "summary": "Debug with PyCharm using the 'Python Debug Server' configuration",
     "version": "14.0.0.0.1",
     "category": "Extra Tools",
+    "images": [ "static/description/banner.png" ],
     "website": "https://angelvil.dev",
     "author": "Angel Vilaplana",
     "license": "AGPL-3",
