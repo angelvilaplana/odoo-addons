@@ -1,6 +1,6 @@
 import os
 
-from odoo.tools import config
+from odoo.tools import str2bool, config
 
 try:
     from odoo.addons.server_environment import serv_config
@@ -13,11 +13,10 @@ except ImportError:
     pycharm_debug_server_config = config.misc.get("pycharm_debug_server", {})
 
 def is_enabled():
-    return (
-        os.environ.get('PYCHARM_DEBUG_SERVER_ENABLED')
-        or pycharm_debug_server_config.get('enabled')
-        or False
-    )
+    if os.environ.get('PYCHARM_DEBUG_SERVER_ENABLED'):
+        return str2bool(os.environ.get('PYCHARM_DEBUG_SERVER_ENABLED'))
+    else:
+        return pycharm_debug_server_config.get('enabled') or False
 
 def get_host_config():
     return (
@@ -27,25 +26,23 @@ def get_host_config():
     )
 
 def get_port_config():
-    return (
+    return int(
         os.environ.get('PYCHARM_DEBUG_SERVER_PORT')
         or pycharm_debug_server_config.get('port')
         or 6899
     )
 
 def get_stdout_config():
-    return (
-        os.environ.get('PYCHARM_DEBUG_SERVER_STDOUT')
-        or pycharm_debug_server_config.get('stdout')
-        or True
-    )
+    if os.environ.get('PYCHARM_DEBUG_SERVER_STDOUT'):
+        return str2bool(os.environ.get('PYCHARM_DEBUG_SERVER_STDOUT'))
+    else:
+        return pycharm_debug_server_config.get('stdout') or True
 
 def get_stderr_config():
-    return (
-        os.environ.get('PYCHARM_DEBUG_SERVER_STDERR')
-        or pycharm_debug_server_config.get('stderr')
-        or True
-    )
+    if os.environ.get('PYCHARM_DEBUG_SERVER_STDERR'):
+        return str2bool(os.environ.get('PYCHARM_DEBUG_SERVER_STDERR'))
+    else:
+        return pycharm_debug_server_config.get('stderr') or True
 
 def get_config():
     return {
