@@ -18,12 +18,22 @@ def initialize_debug():
 
     _logger.info("Initializing PyCharm Debug Server")
 
-    pydevd_pycharm.settrace(
-        host=config['host'],
-        port=config['port'],
-        stdoutToServer=config['stdout'],
-        stderrToServer=config['stderr'],
-    )
+    try:
+        # new version
+        pydevd_pycharm.settrace(
+            host=config['host'],
+            port=config['port'],
+            stdout_to_server=config['stdout'],
+            stderr_to_server=config['stderr'],
+        )
+    except TypeError:
+        # old version
+        pydevd_pycharm.settrace(
+            host=config['host'],
+            port=config['port'],
+            stdoutToServer=config['stdout'],
+            stderrToServer=config['stderr'],
+        )
 
 def post_load():
     initialize_debug()
